@@ -1,0 +1,289 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    object-fit: contain;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Phone model wrapper */
+.phone {
+    position: relative;
+    width: 380px;
+    max-width: 90vw;
+    aspect-ratio: 9 / 19.5;
+    background: #0f0f0f;
+    border-radius: 48px;
+    padding: 14px;
+    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6), 0 0 0 6px #1b1b1b, 0 0 0 12px #2e2e2e;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    backdrop-filter: blur(6px);
+}
+
+.phone-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 36px;
+    overflow: hidden;
+    background: linear-gradient(160deg, #202020 0%, #151515 60%, #101010 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+.phone-notch {
+    position: relative;
+    width: 160px;
+    height: 26px;
+    background: #0a0a0a;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+    margin: 0 auto;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+}
+
+.phone-notch .camera {
+    width: 14px;
+    height: 14px;
+    background: radial-gradient(circle at 30% 30%, #3af, #000 70%);
+    border-radius: 50%;
+    box-shadow: 0 0 4px #3af;
+}
+
+.phone-notch .speaker {
+    width: 58px;
+    height: 6px;
+    background: #222;
+    border-radius: 3px;
+    box-shadow: inset 0 0 4px #000;
+}
+
+.screen {
+    flex: 1;
+    padding: 12px 12px 20px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    /* for toast positioning */
+}
+
+.phone-shadow {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: 48px;
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04), inset 0 0 12px rgba(255, 255, 255, 0.06);
+}
+
+.calculator {
+    background: #121212;
+    border-radius: 28px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+}
+
+.display {
+    background: #2d2d2d;
+    padding: 30px;
+    text-align: right;
+    color: white;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+.previous-operand {
+    font-size: 1.2rem;
+    color: #a5a5a5;
+    min-height: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.current-operand {
+    font-size: 2.5rem;
+    font-weight: 300;
+    min-height: 2.5rem;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    background: #0a0a0a;
+    padding: 8px 12px 14px 12px;
+    box-sizing: border-box;
+}
+
+.btn sup {
+    font-size: 0.8em;
+}
+
+.btn {
+    border: none;
+    background: #3a3a3a;
+    color: white;
+    font-size: 1.45rem;
+    padding: 22px 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    line-height: 1.1;
+}
+
+.btn:hover {
+    background: #4a4a4a;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-number {
+    background: #3a3a3a;
+}
+
+.btn-number:hover {
+    background: #505050;
+}
+
+.btn-operator {
+    background: #ff9500;
+    font-size: 1.8rem;
+}
+
+.btn-operator[data-operator="%"] {
+    font-size: 1.25rem;
+    letter-spacing: 0.3px;
+}
+
+.btn-function[data-action="reciprocal"] {
+    font-size: 1.4rem;
+}
+
+.btn-operator:hover {
+    background: #ffb143;
+}
+
+.btn-function {
+    background: #505050;
+    color: #fff;
+}
+
+.btn-function:hover {
+    background: #656565;
+}
+
+.btn-equals {
+    background: #ff9500;
+    grid-column: 1 / 5;
+    font-size: 2rem;
+}
+
+.btn-equals:hover {
+    background: #ffb143;
+}
+
+/* Toast alert */
+.toast {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    background: linear-gradient(135deg, #8a1500, #400000);
+    color: #ffffff;
+    padding: 10px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px) saturate(140%);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.toast.error {
+    background: linear-gradient(135deg, #8a1500, #400000);
+}
+
+.toast.success {
+    background: linear-gradient(135deg, #3bff7a, #009944);
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+    .calculator {
+        max-width: 100%;
+    }
+
+    .display {
+        padding: 20px;
+        min-height: 100px;
+    }
+
+    .current-operand {
+        font-size: 2rem;
+    }
+
+    .previous-operand {
+        font-size: 1rem;
+    }
+
+    .btn {
+        padding: 20px;
+        font-size: 1.3rem;
+    }
+
+    .btn-operator {
+        font-size: 1.5rem;
+    }
+
+    .btn-equals {
+        font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 360px) {
+    .btn {
+        padding: 15px;
+        font-size: 1.1rem;
+    }
+
+    .current-operand {
+        font-size: 1.8rem;
+    }
+}
