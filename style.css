@@ -1,7 +1,14 @@
+/* RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -9,29 +16,28 @@ body {
     background-image: url('background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    object-fit: contain;
-    min-height: 100vh;
+    background-attachment: fixed; 
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    padding: 0; 
 }
 
-/* Phone model wrapper */
+/* PHONE FRAME */
 .phone {
     position: relative;
-    width: 380px;
-    max-width: 90vw;
+    width: min(380px, 90vw);
     aspect-ratio: 9 / 19.5;
     background: #0f0f0f;
     border-radius: 48px;
     padding: 14px;
-    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6), 0 0 0 6px #1b1b1b, 0 0 0 12px #2e2e2e;
+    box-shadow: 
+        0 30px 60px -10px rgba(0, 0, 0, 0.6),
+        0 0 0 6px #1b1b1b,
+        0 0 0 12px #2e2e2e;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
-    backdrop-filter: blur(6px);
 }
 
 .phone-inner {
@@ -53,13 +59,13 @@ body {
     border-bottom-left-radius: 18px;
     border-bottom-right-radius: 18px;
     margin: 0 auto;
-    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 14px;
 }
 
+/* Notch parts */
 .phone-notch .camera {
     width: 14px;
     height: 14px;
@@ -76,14 +82,14 @@ body {
     box-shadow: inset 0 0 4px #000;
 }
 
+/* SCREEN */
 .screen {
     flex: 1;
-    padding: 12px 12px 20px 12px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     position: relative;
-    /* for toast positioning */
 }
 
 .phone-shadow {
@@ -91,18 +97,20 @@ body {
     inset: 0;
     pointer-events: none;
     border-radius: 48px;
-    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04), inset 0 0 12px rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04),
+                inset 0 0 12px rgba(255, 255, 255, 0.06);
 }
 
+/* CALCULATOR */
 .calculator {
     background: #121212;
     border-radius: 28px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     overflow: hidden;
     width: 100%;
-    max-width: 100%;
 }
 
+/* DISPLAY */
 .display {
     background: #2d2d2d;
     padding: 30px;
@@ -112,34 +120,26 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    word-wrap: break-word;
-    word-break: break-all;
 }
 
 .previous-operand {
     font-size: 1.2rem;
     color: #a5a5a5;
-    min-height: 1.5rem;
     margin-bottom: 5px;
 }
 
 .current-operand {
     font-size: 2.5rem;
     font-weight: 300;
-    min-height: 2.5rem;
 }
 
+/* BUTTON GRID */
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 4px;
     background: #0a0a0a;
-    padding: 8px 12px 14px 12px;
-    box-sizing: border-box;
-}
-
-.btn sup {
-    font-size: 0.8em;
+    padding: 8px 12px 14px;
 }
 
 .btn {
@@ -149,12 +149,10 @@ body {
     font-size: 1.45rem;
     padding: 22px 14px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    font-weight: 400;
+    transition: 0.2s ease;
     display: flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap;
     line-height: 1.1;
 }
 
@@ -166,10 +164,6 @@ body {
     transform: scale(0.95);
 }
 
-.btn-number {
-    background: #3a3a3a;
-}
-
 .btn-number:hover {
     background: #505050;
 }
@@ -179,28 +173,19 @@ body {
     font-size: 1.8rem;
 }
 
-.btn-operator[data-operator="%"] {
-    font-size: 1.25rem;
-    letter-spacing: 0.3px;
-}
-
-.btn-function[data-action="reciprocal"] {
-    font-size: 1.4rem;
-}
-
 .btn-operator:hover {
     background: #ffb143;
 }
 
 .btn-function {
     background: #505050;
-    color: #fff;
 }
 
 .btn-function:hover {
     background: #656565;
 }
 
+/* EQUALS BUTTON */
 .btn-equals {
     background: #ff9500;
     grid-column: 1 / 5;
@@ -211,24 +196,20 @@ body {
     background: #ffb143;
 }
 
-/* Toast alert */
+/* TOAST */
 .toast {
     position: absolute;
     top: 10px;
     right: 14px;
     background: linear-gradient(135deg, #8a1500, #400000);
-    color: #ffffff;
+    color: white;
     padding: 10px 16px;
     font-size: 0.85rem;
-    font-weight: 500;
     border-radius: 14px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
-    transition: opacity .3s ease, transform .3s ease;
-    letter-spacing: 0.5px;
-    backdrop-filter: blur(4px) saturate(140%);
+    transition: .3s ease;
 }
 
 .toast.show {
@@ -236,18 +217,14 @@ body {
     transform: translateY(0);
 }
 
-.toast.error {
-    background: linear-gradient(135deg, #8a1500, #400000);
-}
-
 .toast.success {
     background: linear-gradient(135deg, #3bff7a, #009944);
 }
 
-/* Responsive Design */
+/* RESPONSIVE FIXES */
 @media (max-width: 480px) {
-    .calculator {
-        max-width: 100%;
+    body {
+        overflow-y: hidden; 
     }
 
     .display {
@@ -259,21 +236,13 @@ body {
         font-size: 2rem;
     }
 
-    .previous-operand {
-        font-size: 1rem;
-    }
-
     .btn {
-        padding: 20px;
-        font-size: 1.3rem;
+        padding: 18px;
+        font-size: 1.25rem;
     }
 
     .btn-operator {
-        font-size: 1.5rem;
-    }
-
-    .btn-equals {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
     }
 }
 
@@ -284,6 +253,6 @@ body {
     }
 
     .current-operand {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
     }
 }
