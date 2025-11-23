@@ -270,8 +270,8 @@ body {
     }
 
     .phone {
-        width: min(360px, 95vw);
-        max-height: 97vh;
+        width: min(320px, 80vw);
+        max-height: 77vh;
         border-radius: 40px;
         padding: 12px;
     }
