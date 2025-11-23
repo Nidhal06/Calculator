@@ -1,14 +1,13 @@
-/* RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-    width: 100%;
-    overflow-x: hidden;
+html {
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
 }
 
 body {
@@ -16,28 +15,32 @@ body {
     background-image: url('background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-attachment: fixed; 
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0; 
+    padding: 10px;
 }
 
-/* PHONE FRAME */
+/* Phone model wrapper */
 .phone {
     position: relative;
-    width: min(380px, 90vw);
+    width: min(350px, 50vw);
+    max-height: 85vh;
     aspect-ratio: 9 / 19.5;
     background: #0f0f0f;
     border-radius: 48px;
     padding: 14px;
-    box-shadow: 
-        0 30px 60px -10px rgba(0, 0, 0, 0.6),
-        0 0 0 6px #1b1b1b,
-        0 0 0 12px #2e2e2e;
+    box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.6), 0 0 0 6px #1b1b1b, 0 0 0 12px #2e2e2e;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    backdrop-filter: blur(6px);
 }
 
 .phone-inner {
@@ -59,13 +62,13 @@ body {
     border-bottom-left-radius: 18px;
     border-bottom-right-radius: 18px;
     margin: 0 auto;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 14px;
 }
 
-/* Notch parts */
 .phone-notch .camera {
     width: 14px;
     height: 14px;
@@ -82,14 +85,14 @@ body {
     box-shadow: inset 0 0 4px #000;
 }
 
-/* SCREEN */
 .screen {
     flex: 1;
-    padding: 12px;
+    padding: 8px 8px 12px 8px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     position: relative;
+    overflow: hidden;
 }
 
 .phone-shadow {
@@ -97,62 +100,80 @@ body {
     inset: 0;
     pointer-events: none;
     border-radius: 48px;
-    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04),
-                inset 0 0 12px rgba(255, 255, 255, 0.06);
+    box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.04), inset 0 0 12px rgba(255, 255, 255, 0.06);
 }
 
-/* CALCULATOR */
 .calculator {
     background: #121212;
     border-radius: 28px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
     overflow: hidden;
     width: 100%;
+    max-width: 100%;
 }
 
-/* DISPLAY */
+.credit {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.7rem;
+    padding: 8px 10px 6px;
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    margin-top: auto;
+}
+
 .display {
     background: #2d2d2d;
-    padding: 30px;
+    padding: 20px 16px;
     text-align: right;
     color: white;
-    min-height: 120px;
+    min-height: 85px;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .previous-operand {
-    font-size: 1.2rem;
+    font-size: 0.95rem;
     color: #a5a5a5;
-    margin-bottom: 5px;
+    min-height: 1.2rem;
+    margin-bottom: 4px;
 }
 
 .current-operand {
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     font-weight: 300;
+    min-height: 2rem;
 }
 
-/* BUTTON GRID */
 .buttons {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 4px;
+    gap: 3px;
     background: #0a0a0a;
-    padding: 8px 12px 14px;
+    padding: 6px 8px 10px 8px;
+    box-sizing: border-box;
+}
+
+.btn sup {
+    font-size: 0.8em;
 }
 
 .btn {
     border: none;
     background: #3a3a3a;
     color: white;
-    font-size: 1.45rem;
-    padding: 22px 14px;
+    font-size: 1.15rem;
+    padding: 16px 10px;
     cursor: pointer;
-    transition: 0.2s ease;
+    transition: all 0.2s ease;
+    font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
     line-height: 1.1;
 }
 
@@ -164,13 +185,26 @@ body {
     transform: scale(0.95);
 }
 
+.btn-number {
+    background: #3a3a3a;
+}
+
 .btn-number:hover {
     background: #505050;
 }
 
 .btn-operator {
     background: #ff9500;
-    font-size: 1.8rem;
+    font-size: 1.4rem;
+}
+
+.btn-operator[data-operator="%"] {
+    font-size: 1.05rem;
+    letter-spacing: 0.3px;
+}
+
+.btn-function[data-action="reciprocal"] {
+    font-size: 1.1rem;
 }
 
 .btn-operator:hover {
@@ -179,37 +213,41 @@ body {
 
 .btn-function {
     background: #505050;
+    color: #fff;
 }
 
 .btn-function:hover {
     background: #656565;
 }
 
-/* EQUALS BUTTON */
 .btn-equals {
     background: #ff9500;
     grid-column: 1 / 5;
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .btn-equals:hover {
     background: #ffb143;
 }
 
-/* TOAST */
+/* Toast alert */
 .toast {
     position: absolute;
     top: 10px;
     right: 14px;
     background: linear-gradient(135deg, #8a1500, #400000);
-    color: white;
+    color: #ffffff;
     padding: 10px 16px;
     font-size: 0.85rem;
+    font-weight: 500;
     border-radius: 14px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.08);
     opacity: 0;
     transform: translateY(-8px);
     pointer-events: none;
-    transition: .3s ease;
+    transition: opacity .3s ease, transform .3s ease;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(4px) saturate(140%);
 }
 
 .toast.show {
@@ -217,42 +255,149 @@ body {
     transform: translateY(0);
 }
 
+.toast.error {
+    background: linear-gradient(135deg, #8a1500, #400000);
+}
+
 .toast.success {
     background: linear-gradient(135deg, #3bff7a, #009944);
 }
 
-/* RESPONSIVE FIXES */
+/* Responsive Design */
 @media (max-width: 480px) {
     body {
-        overflow-y: hidden; 
+        padding: 5px;
+    }
+
+    .phone {
+        width: min(360px, 95vw);
+        max-height: 97vh;
+        border-radius: 40px;
+        padding: 12px;
+    }
+
+    .phone-inner {
+        border-radius: 30px;
+    }
+
+    .calculator {
+        max-width: 100%;
     }
 
     .display {
-        padding: 20px;
-        min-height: 100px;
+        padding: 18px;
+        min-height: 90px;
     }
 
     .current-operand {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .previous-operand {
+        font-size: 0.95rem;
     }
 
     .btn {
-        padding: 18px;
-        font-size: 1.25rem;
+        padding: 18px 12px;
+        font-size: 1.2rem;
     }
 
     .btn-operator {
         font-size: 1.4rem;
     }
+
+    .btn-equals {
+        font-size: 1.6rem;
+    }
+
+    .buttons {
+        padding: 6px 10px 12px 10px;
+        gap: 3px;
+    }
+
+    .credit {
+        font-size: 0.65rem;
+        padding: 6px 8px 4px;
+    }
 }
 
 @media (max-width: 360px) {
-    .btn {
+    body {
+        padding: 3px;
+    }
+
+    .phone {
+        width: min(340px, 98vw);
+        max-height: 98vh;
+        border-radius: 36px;
+        padding: 10px;
+    }
+
+    .phone-inner {
+        border-radius: 28px;
+    }
+
+    .display {
         padding: 15px;
-        font-size: 1.1rem;
+        min-height: 80px;
+    }
+
+    .btn {
+        padding: 15px 10px;
+        font-size: 1.05rem;
+    }
+
+    .btn-operator {
+        font-size: 1.25rem;
+    }
+
+    .btn-equals {
+        font-size: 1.4rem;
     }
 
     .current-operand {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
+    }
+
+    .previous-operand {
+        font-size: 0.85rem;
+    }
+
+    .buttons {
+        padding: 5px 8px 10px 8px;
+        gap: 2px;
+    }
+
+    .credit {
+        font-size: 0.6rem;
+        padding: 5px 6px 3px;
+    }
+}
+
+@media (max-height: 700px) and (max-width: 480px) {
+    .phone {
+        max-height: 98vh;
+    }
+
+    .display {
+        padding: 12px;
+        min-height: 70px;
+    }
+
+    .current-operand {
+        font-size: 1.5rem;
+    }
+
+    .btn {
+        padding: 12px 8px;
+        font-size: 1rem;
+    }
+
+    .btn-operator {
+        font-size: 1.2rem;
+    }
+
+    .btn-equals {
+        font-size: 1.3rem;
     }
 }
